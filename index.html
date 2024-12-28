@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W2C - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Vertical Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 200px;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        .navbar .logo {
+            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+            transform: translateX(-5px);
+        }
+
+        /* Main Content */
+        main {
+            margin-right: 220px; /* Space for navbar */
+            background-image: url('images/home_page.jpg');
+            background-size: cover;
+            background-position: center;
+            height: calc(100vh - 60px); /* Full height minus footer */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: #333;
+        }
+
+        .hero-content p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .hero-content .cta-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #021020;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .hero-content .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer .social-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 0;
+            margin: 10px 0 0;
+        }
+
+        footer .social-links a {
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #0e0f10;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">s1ckFits</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="shoes.html">Shoes</a></li>
+                <li><a href="jewelry.html">Jewelry</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="tops.html">Tops</a></li>
+                <li><a href="bottoms.html">Bottoms</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to BudgetFits by s1ckfit</h1>
+                <p>The Ultimate Spreadsheet</p>
+                <br>
+                <a href="catalog.html" class="cta-button">Explore Catalog</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 BudgetFits. All Rights Reserved.</p>
+            <ul class="social-links">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
