@@ -60,31 +60,36 @@
 
         .product-grid {
             display: grid;
-            gap: 0.7px; /* Remove gaps between products */
+            gap: 10px; /* Consistent spacing between cards */
+            grid-template-columns: repeat(5, 1fr); /* Default to 5 items per row */
             margin-top: 20px;
         }
 
         .product-card {
             background-color: #fff;
-            padding: 15px;
-            border: 1px solid #000000; /* Subtle border */
+            padding: 20px;
+            border: 1px solid #ddd; /* Subtle border */
             text-align: center;
+            box-sizing: border-box; /* Include padding and border in width/height */
+            height: auto; /* Adjust height dynamically */
         }
 
         .product-card img {
             max-width: 100%;
-            height: auto;
+            height: auto; /* Maintain aspect ratio */
+            aspect-ratio: 1 / 1; /* Ensures square images */
+            object-fit: cover; /* Ensures images fill their space */
             margin-bottom: 10px;
         }
 
         .product-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 400;
             margin: 10px 0;
         }
 
         .product-card p {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #555;
         }
 
@@ -92,7 +97,7 @@
             display: inline-block;
             margin-top: 10px;
             padding: 10px 20px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #fff;
             background-color: #000; /* Black background for minimalism */
             text-decoration: none;
@@ -155,8 +160,8 @@
         <div class="header-options">
             <div class="view-options">
                 <button onclick="changeView(2)">2 Items/Row</button>
-                <button onclick="changeView(4)">4 Items/Row</button>
-                <button onclick="changeView(6)">6 Items/Row</button>
+                <button onclick="changeView(3)">3 Items/Row</button>
+                <button onclick="changeView(5)">5 Items/Row</button>
             </div>
             <div class="filter-options">
                 <select id="price-filter">
@@ -171,21 +176,28 @@
             </div>
         </div>
 
-        <div class="product-grid" id="product-grid" style="grid-template-columns: repeat(4, 1fr);">
-            <!-- Example Product Cards -->
+        <div class="product-grid" id="product-grid">
+            <!-- Product Cards -->
             <div class="product-card">
                 <img src="images/Bunch of Bapestas.jpg" alt="Bunch of Bapestas">
                 <h3>Bunch of Bapestas</h3>
                 <p>158¥</p>
-                <p>CAD 35.26| USD 24.45 </p>
-                <a href="https://acbuy.com/product1" target="_blank">Buy Now</a>
-            </div>
+                <p>CAD 35.26 | USD 24.45 </p>
+                <a href="https://l.acbuy.com/ax/193460012" target="_blank">Buy Now</a>
             </div>
             <div class="product-card">
-                <img src="images/product2.jpg" alt="Product 2">
-                <h3>Product Name</h3>
-                <p>$59.99</p>
-                <a href="https://acbuy.com/product2" target="_blank">Buy Now</a>
+                <img src="images/Yeezy 550s Black.jpg" alt="Yeezy 550s Black">
+                <h3>Yeezy 550s Black</h3>
+                <p>228¥</p>
+                <p>CAD 50.87 | USD 35.28 </p>
+                <a href="https://l.acbuy.com/ax/3161693137" target="_blank">Buy Now</a>
+            </div>
+            <div class="product-card">
+                <img src="images/Rick Owens Vans Suede.jpg" alt="Rick Owens Vans Suede">
+                <h3>Rick Owens Vans Suede</h3>
+                <p>328¥</p>
+                <p>CAD 73.18 | USD 50.75 </p>
+                <a href="https://l.acbuy.com/ax/4048421933" target="_blank">Buy Now</a>
             </div>
             <!-- Add more product cards dynamically -->
         </div>
@@ -221,6 +233,11 @@
             if (e.target.value === 'low-to-high' || e.target.value === 'high-to-low') {
                 sortProducts(e.target.value);
             }
+        });
+
+        // Set default to 5 items per row
+        document.addEventListener('DOMContentLoaded', () => {
+            changeView(5);
         });
     </script>
 </body>
