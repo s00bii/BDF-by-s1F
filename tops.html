@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDF - Catalog</title>
+    <title>BDF - Shoes</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .catalog-container {
@@ -45,46 +45,38 @@
             background-color: #f5f5f5;
         }
 
-        .filter-options {
-            display: flex;
-            gap: 10px;
-        }
-
-        .filter-options select {
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #000000; /* Subtle border */
-            background-color: #fff;
-            cursor: pointer;
-        }
-
         .product-grid {
             display: grid;
-            gap: 0.7px; /* Remove gaps between products */
+            gap: 10px; /* Consistent spacing between cards */
+            grid-template-columns: repeat(3, 1fr); /* Default to 3 items per row */
             margin-top: 20px;
         }
 
         .product-card {
             background-color: #fff;
-            padding: 15px;
-            border: 1px solid #000000; /* Subtle border */
+            padding: 20px;
+            border: 1px solid #ddd; /* Subtle border */
             text-align: center;
+            box-sizing: border-box; /* Include padding and border in width/height */
+            height: auto; /* Adjust height dynamically */
         }
 
         .product-card img {
             max-width: 100%;
-            height: auto;
+            height: auto; /* Maintain aspect ratio */
+            aspect-ratio: 1 / 1; /* Ensures square images */
+            object-fit: cover; /* Ensures images fill their space */
             margin-bottom: 10px;
         }
 
         .product-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 400;
             margin: 10px 0;
         }
 
         .product-card p {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #555;
         }
 
@@ -92,7 +84,7 @@
             display: inline-block;
             margin-top: 10px;
             padding: 10px 20px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #fff;
             background-color: #000; /* Black background for minimalism */
             text-decoration: none;
@@ -102,37 +94,6 @@
 
         .product-card a:hover {
             background-color: #333;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 200px;
-            background-color: #fff;
-            border-left: 1px solid #ddd; /* Subtle border */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 50px;
-        }
-
-        .navbar .logo {
-            font-weight: bold;
-        }
-
-        .navbar ul {
-            padding: 0;
-        }
-
-        .navbar ul li a {
-            text-decoration: none;
-            color: #000; /* Minimalistic black */
-        }
-
-        .navbar ul li a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -147,6 +108,7 @@
                 <li><a href="accessories.html">Accessories</a></li>
                 <li><a href="tops.html">Tops</a></li>
                 <li><a href="bottoms.html">Bottoms</a></li>
+                <li><a href="catalog.html">All</a></li>
             </ul>
         </nav>
     </header>
@@ -155,38 +117,15 @@
         <div class="header-options">
             <div class="view-options">
                 <button onclick="changeView(2)">2 Items/Row</button>
-                <button onclick="changeView(4)">4 Items/Row</button>
-                <button onclick="changeView(6)">6 Items/Row</button>
-            </div>
-            <div class="filter-options">
-                <select id="price-filter">
-                    <option value="default">Sort by Price</option>
-                    <option value="low-to-high">Low to High</option>
-                    <option value="high-to-low">High to Low</option>
-                </select>
-                <select>
-                    <option value="default">Filter by Brand</option>
-                    <!-- Add brand options here -->
-                </select>
+                <button onclick="changeView(3)">3 Items/Row</button>
+                <button onclick="changeView(5)">5 Items/Row</button>
             </div>
         </div>
 
-        <div class="product-grid" id="product-grid" style="grid-template-columns: repeat(4, 1fr);">
-            <!-- Example Product Cards -->
-            <div class="product-card">
-                <img src="images/product1.jpg" alt="Product 1">
-                <h3>Product Name</h3>
-                <p>$49.99</p>
-                <a href="https://acbuy.com/product1" target="_blank">Buy Now</a>
-            </div>
-            <div class="product-card">
-                <img src="images/product2.jpg" alt="Product 2">
-                <h3>Product Name</h3>
-                <p>$59.99</p>
-                <a href="https://acbuy.com/product2" target="_blank">Buy Now</a>
-            </div>
-            <!-- Add more product cards dynamically -->
+        <div class="product-grid" id="product-grid">
+            <!-- Product cards will be dynamically added here -->
         </div>
+        
     </main>
 
     <footer>
@@ -201,24 +140,75 @@
             grid.style.gridTemplateColumns = `repeat(${itemsPerRow}, 1fr)`;
         }
 
-        function sortProducts(sortOrder) {
-            const grid = document.getElementById('product-grid');
-            const products = Array.from(grid.children);
+        async function fetchTops() {
+            try {
+                // Fetch data from API
+                const response = await fetch("https://sheetdb.io/api/v1/dqiov9zvi38i9");
+                const products = await response.json();
 
-            products.sort((a, b) => {
-                const priceA = parseFloat(a.querySelector('p').textContent.replace('$', ''));
-                const priceB = parseFloat(b.querySelector('p').textContent.replace('$', ''));
-                return sortOrder === 'low-to-high' ? priceA - priceB : priceB - priceA;
-            });
+                // Filter for tops only
+                const tops = products.filter(product => 
+                    product['Tags'] && product['Tags'].toLowerCase().includes('tops')
+                );
 
-            // Reorder the product grid
-            products.forEach(product => grid.appendChild(product));
+                // Get the product grid container
+                const productGrid = document.getElementById("product-grid");
+
+                // Clear any existing content
+                productGrid.innerHTML = '';
+
+                // Loop through the filtered products and dynamically create product cards
+                tops.forEach((product) => {
+                    const productCard = document.createElement("div");
+                    productCard.classList.add("product-card");
+
+                    // Create the image element
+                    const img = document.createElement("img");
+                    const proxyImageUrl = `http://localhost:5000/proxy-image?url=${encodeURIComponent(product["Image"])}`;
+                    img.src = proxyImageUrl;
+                    img.alt = product['Item Name'];
+
+                    // Fallback for missing images
+                    img.onerror = () => {
+                        img.src = "images/default.jpg";
+                    };
+
+                    const title = document.createElement("h3");
+                    title.textContent = product['Item Name'] || "Unknown Product";
+
+                    const price = document.createElement("p");
+                    price.textContent = product['Price(Yuan)'] || "Price not available";
+
+                    const additionalPrices = document.createElement("p");
+                    additionalPrices.textContent = `CAD: ${product['Price(CAD)'] || 'N/A'} | USD: ${product['Price(USD)'] || 'N/A'} | EUR: ${product['Price(EUR)'] || 'N/A'}`;
+
+                    const buyLink = document.createElement("a");
+                    buyLink.href = product['Link'] || "#";
+                    buyLink.textContent = "Buy Now";
+                    buyLink.target = "_blank";
+
+                    productCard.appendChild(img);
+                    productCard.appendChild(title);
+                    productCard.appendChild(price);
+                    productCard.appendChild(additionalPrices);
+                    productCard.appendChild(buyLink);
+
+                    productGrid.appendChild(productCard);
+                });
+
+                // Call changeView(5) AFTER the grid is populated
+                changeView(5);
+
+            } catch (error) {
+                console.error("Error fetching Tops:", error);
+            }
         }
 
-        document.getElementById('price-filter').addEventListener('change', (e) => {
-            if (e.target.value === 'low-to-high' || e.target.value === 'high-to-low') {
-                sortProducts(e.target.value);
-            }
+
+        // Fetch and display products when the page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchTops();
+            changeView(5);
         });
     </script>
 </body>
