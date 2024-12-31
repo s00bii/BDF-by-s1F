@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 
-// Default route to handle "/"
+// Default route
 app.get("/", (req, res) => {
     res.send("Server is running successfully!");
 });
