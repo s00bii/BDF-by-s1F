@@ -27,7 +27,10 @@ app.get("/proxy-image", async (req, res) => {
         res.status(500).send("Failed to fetch image");
     }
 });
-
+//Work around for CANNOT GET / Error
+app.get("/", (req, res) => {
+    res.send("Server is running!");
+});
 const PORT = 5000;
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on http://0.0.0.0:${PORT}`);
