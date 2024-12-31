@@ -1,9 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch");
 
 const app = express();
 app.use(cors());
+
+// Add a handler for the root path
+app.get("/", (req, res) => {
+    res.send("Server is running!");
+});
 
 app.get("/proxy-image", async (req, res) => {
     const imageUrl = req.query.url;
@@ -23,6 +27,6 @@ app.get("/proxy-image", async (req, res) => {
 });
 
 const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`Proxy server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
