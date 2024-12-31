@@ -161,7 +161,7 @@
                     const img = document.createElement("img");
                     if (product["Image"]) {
                         // Use proxy for valid image URLs
-                        const proxyImageUrl = `http://localhost:5000/proxy-image?url=${encodeURIComponent(product["Image"])}`;
+                        const proxyImageUrl = `http://localhost:5001/proxy-image?url=${encodeURIComponent(product["Image"])}`;
                         img.src = proxyImageUrl;
                     } else {
                         // Fallback to default image if "Image" field is missing
