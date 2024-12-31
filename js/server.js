@@ -1,9 +1,6 @@
-console.log("Node.js version:", process.version);
-console.log("node-fetch version:", require("node-fetch/package.json").version);
-console.log("PM2 environment:", process.env);
-
 const express = require("express");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
 app.use(cors());
@@ -15,7 +12,6 @@ app.get("/proxy-image", async (req, res) => {
     }
 
     try {
-        const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
         const response = await fetch(imageUrl);
         const buffer = await response.buffer();
         res.set("Content-Type", "image/jpeg");
