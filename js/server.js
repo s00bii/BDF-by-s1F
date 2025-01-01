@@ -1,35 +1,29 @@
 const express = require("express");
-const cors = require("cors");
-const fetch = require("node-fetch");
+const fs = require("fs");
+const https = require("https");
+const http = require("http");
 
 const app = express();
-app.use(cors());
 
-app.get("/proxy-image", async (req, res) => {
-    const imageUrl = req.query.url;
-    if (!imageUrl) {
-        return res.status(400).send("Image URL is required");
-    }
+// Redirect HTTP to HTTPS
+http.createServer((req, res) => {
+    res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+    res.end();
+}).listen(80);
 
-    try {
-        const response = await fetch(imageUrl);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch image: ${response.statusText}`);
-        }
-        const buffer = await response.buffer();
-        res.set("Content-Type", "image/jpeg");
-        res.send(buffer);
-    } catch (error) {
-        console.error("Error fetching image:", error);
-        res.status(500).send("Failed to fetch image");
-    }
+// HTTPS server options
+const options = {
+    key: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/cert.pem"),
+    ca: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/chain.pem"),
+};
+
+// Start the HTTPS server
+https.createServer(options, app).listen(443, () => {
+    console.log("Server running on https://s1ckfit.com");
 });
 
+// Example route
 app.get("/", (req, res) => {
-    res.send("Welcome to the BDF Proxy Server! Use /proxy-image to fetch images.");
-});
-
-const PORT = 5001; // Ensure this matches the port you're using
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Proxy server running on http://0.0.0.0:${PORT}`);
+    res.send("Hello, World! This is now secured with HTTPS.");
 });
