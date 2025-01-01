@@ -5,12 +5,6 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 
-// Default route
-app.get("/", (req, res) => {
-    res.send("Server is running successfully!");
-});
-
-// Proxy image route
 app.get("/proxy-image", async (req, res) => {
     const imageUrl = req.query.url;
     if (!imageUrl) {
@@ -19,6 +13,9 @@ app.get("/proxy-image", async (req, res) => {
 
     try {
         const response = await fetch(imageUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image: ${response.statusText}`);
+        }
         const buffer = await response.buffer();
         res.set("Content-Type", "image/jpeg");
         res.send(buffer);
@@ -28,7 +25,7 @@ app.get("/proxy-image", async (req, res) => {
     }
 });
 
-const PORT = 5001;
+const PORT = 5001; // Ensure this matches the port you're using
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server is running on http://0.0.0.0:${PORT}`);
+    console.log(`Proxy server running on http://0.0.0.0:${PORT}`);
 });
