@@ -23,6 +23,11 @@ https.createServer(options, app).listen(443, () => {
     console.log("Server running on https://s1ckfit.com");
 });
 
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 // Example route
 app.get("/", (req, res) => {
     res.send("Hello, World! This is now secured with HTTPS.");
