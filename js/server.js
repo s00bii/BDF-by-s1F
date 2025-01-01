@@ -25,6 +25,10 @@ app.get("/proxy-image", async (req, res) => {
     }
 });
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the BDF Proxy Server! Use /proxy-image to fetch images.");
+});
+
 const PORT = 5001; // Ensure this matches the port you're using
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Proxy server running on http://0.0.0.0:${PORT}`);
