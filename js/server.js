@@ -19,14 +19,14 @@ const options = {
 };
 
 // Start HTTPS server (for secure traffic)
-https.createServer(options, app).listen(443, () => {
-    console.log("Server running on https://s1ckfit.com");
+https.createServer(options, app).listen(5001, () => {
+    console.log("Server running on https://s1ckfit.com:5001");
 });
 
-const PORT = 5001; // Node.js should listen on this port
-app.listen(PORT, () => {
-    console.log(`Node.js server running on port ${PORT}`);
-});
+//const PORT = 5001; // Node.js should listen on this port
+//app.listen(PORT, () => {
+//    console.log(`Node.js server running on port ${PORT}`);
+//});
 
 // Example route
 app.get("/", (req, res) => {
