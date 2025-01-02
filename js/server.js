@@ -17,7 +17,7 @@ app.get('/favicon.ico', (req, res) => {
 // HTTPS server options
 const options = {
     key: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/cert.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/fullchain.pem"),
     ca: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/chain.pem"),
 };
 
