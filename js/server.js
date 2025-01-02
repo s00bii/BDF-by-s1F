@@ -5,11 +5,11 @@ const http = require("http");
 
 const app = express();
 
-// Redirect HTTP to HTTPS
-http.createServer((req, res) => {
-    res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
-    res.end();
-}).listen(80); // Nginx will handle this
+// Remove this HTTP listen on port 80
+// http.createServer((req, res) => {
+//     res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+//     res.end();
+// }).listen(80);
 
 // HTTPS server options
 const options = {
@@ -25,7 +25,7 @@ https.createServer(options, app).listen(443, () => {
 
 const PORT = 5001; // Node.js should listen on this port
 app.listen(PORT, () => {
-  console.log(`Node.js server running on port ${PORT}`);
+    console.log(`Node.js server running on port ${PORT}`);
 });
 
 // Example route
