@@ -9,7 +9,7 @@ const app = express();
 http.createServer((req, res) => {
     res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
     res.end();
-}).listen(80);
+}).listen(80); // Nginx will handle this
 
 // HTTPS server options
 const options = {
