@@ -18,14 +18,14 @@ const options = {
     ca: fs.readFileSync("/etc/letsencrypt/live/s1ckfit.com/chain.pem"),
 };
 
-// Start the HTTPS server
+// Start HTTPS server (for secure traffic)
 https.createServer(options, app).listen(443, () => {
     console.log("Server running on https://s1ckfit.com");
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = 5001; // Node.js should listen on this port
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Node.js server running on port ${PORT}`);
 });
 
 // Example route
