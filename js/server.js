@@ -1,8 +1,17 @@
 const express = require("express");
 const fs = require("fs");
 const https = require("https");
+const path = require("path");
 
 const app = express();
+
+// Serve static files (e.g., favicon.ico, images, CSS)
+app.use(express.static(path.join(__dirname, 'public'))); // Assuming your static files are in a 'public' folder
+
+// Explicitly handle favicon.ico requests
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'favicon.ico')); // Adjust path if needed
+});
 
 // HTTPS server options
 const options = {
@@ -19,4 +28,9 @@ https.createServer(options, app).listen(5001, '0.0.0.0', () => {
 // Example route
 app.get("/", (req, res) => {
     res.send("Hello, World! This is now secured with HTTPS.");
+});
+
+// Catch-all route for debugging (optional, can be removed later)
+app.get('*', (req, res) => {
+    res.send(`Requested URL: ${req.url}`); // For debugging to catch any unhandled routes
 });
